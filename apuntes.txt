@@ -1,0 +1,7 @@
+🖌️ Sugerencia de Uso en Web con la Nueva Paleta:
+
+Header / Footer: Azul Marino Profundo (#263238) con texto en Blanco Puro (#FFFFFF).
+Botones Principales: Verde Principal (#689F38) con texto blanco, con hover en Amarillo Brillante (#FBC02D).
+Botones Secundarios: Marrón Oscuro (#4E342E) con hover en Rojo Acento (#E53935).
+Fondo General: Blanco Puro (#FFFFFF) o Beige Suave (#FBF8F0) para áreas con menos protagonismo.
+Textos: Marrón Oscuro (#4E342E) para títulos y texto principal. Gris Medio (#757575) para subtítulos, texto de ayuda o menos relevante.

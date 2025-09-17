@@ -1,0 +1,162 @@
+{% extends "registration/base_recover.html" %}
+{% load static %}
+
+{% block title %}Crear Nuevo Usuario{% endblock %}
+
+{% block main_content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-lg border-0 rounded-lg">
+                <div class="card-header text-white text-center py-4" style="background-color: #4E342E;">
+                    <h3 class="fw-bold mb-0">Crear Nuevo Usuario</h3>
+                </div>
+                <div class="card-body p-4">
+                    <form enctype="multipart/form-data" method="post" novalidate>
+                        {% csrf_token %}
+
+                        {% if user_form.errors or profile_formset.errors %}
+                            <div class="alert alert-danger mb-4" role="alert" style="background-color: #E53935; color: white;">
+                                <strong>¡Hubo un problema!</strong> Por favor, corrige los siguientes errores.
+                            </div>
+                        {% endif %}
+                        
+                        <div class="mb-4">
+                            <h4 class="text-dark-brown border-bottom pb-2" style="border-color: #689F38;">Información de la Cuenta</h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="id_username" class="form-label text-dark-brown fw-bold">Nombre de usuario</label>
+                                        {{ user_form.username }}
+                                        <div class="invalid-feedback">El nombre de usuario es obligatorio.</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="id_password" class="form-label text-dark-brown fw-bold">Contraseña</label>
+                                        {{ user_form.password }}
+                                        <div class="invalid-feedback">La contraseña es obligatoria.</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="id_first_name" class="form-label text-dark-brown fw-bold">Nombre</label>
+                                        {{ user_form.first_name }}
+                                        <div class="invalid-feedback">El nombre es obligatorio.</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="id_last_name" class="form-label text-dark-brown fw-bold">Apellido</label>
+                                        {{ user_form.last_name }}
+                                        <div class="invalid-feedback">El apellido es obligatorio.</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label for="id_email" class="form-label text-dark-brown fw-bold">Correo electrónico</label>
+                                        {{ user_form.email }}
+                                        <div class="invalid-feedback">El correo electrónico es obligatorio y debe ser válido.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <h4 class="text-dark-brown border-bottom pb-2" style="border-color: #689F38;">Perfil de Usuario</h4>
+                            <div class="row">
+                                {% for field in profile_form %}
+                                    {% if field.is_hidden %}
+                                        {{ field }}
+                                    {% else %}
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label for="{{ field.id_for_label }}" class="form-label text-dark-brown fw-bold">{{ field.label }}</label>
+                                                {{ field }}
+                                                {% if field.errors %}
+                                                    <div class="invalid-feedback d-block" style="color: #E53935;">
+                                                        {% for error in field.errors %}
+                                                            {{ error }}
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-lg" style="background-color: #689F38; color: #FFFFFF;">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        
+        // Aplica la clase 'form-control' y 'form-select'
+        form.querySelectorAll('input:not([type="submit"]):not([type="button"]):not([type="hidden"]):not([type="file"]), textarea').forEach(field => {
+            field.classList.add('form-control');
+        });
+        form.querySelectorAll('select').forEach(field => {
+            field.classList.add('form-select');
+        });
+
+        // Agrega la clase is-invalid si hay errores del servidor
+        form.querySelectorAll('.invalid-feedback.d-block').forEach(errorDiv => {
+            const field = errorDiv.previousElementSibling;
+            if (field) {
+                field.classList.add('is-invalid');
+            }
+        });
+
+        // Manejo de la validación del lado del cliente
+        form.addEventListener('submit', function(event) {
+            let formIsValid = true;
+            
+            // Campos requeridos (excepto la foto)
+            const requiredFields = form.querySelectorAll('input[type="text"], input[type="email"], input[type="password"], input[type="tel"], input[type="date"], input[type="number"], textarea, select');
+
+            requiredFields.forEach(field => {
+                const feedbackDiv = field.nextElementSibling;
+                
+                // Excluye el campo 'foto_perfil' de la validación
+                if (field.id === 'id_foto_perfil') {
+                    return;
+                }
+                
+                if (!field.value.trim() || field.type === 'email' && !field.validity.valid) {
+                    field.classList.add('is-invalid');
+                    if (feedbackDiv) {
+                        feedbackDiv.style.display = 'block';
+                    }
+                    formIsValid = false;
+                } else {
+                    field.classList.remove('is-invalid');
+                    if (feedbackDiv) {
+                        feedbackDiv.style.display = 'none';
+                    }
+                }
+            });
+            
+            // Si el formulario no es válido, previene el envío
+            if (!formIsValid) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+        });
+
+        if (document.getElementById('id_fecha_contratacion')) {
+            document.getElementById('id_fecha_contratacion').setAttribute('type', 'date');
+            
+        }
+    });
+</script>
+{% endblock %}

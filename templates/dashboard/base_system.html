@@ -1,0 +1,550 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Panel de Control{% endblock %} - Agropecuaria Guardia Ramírez</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="shortcut icon" href="{% static 'img/favicon_transparente.png' %}" type="image/x-icon">
+
+
+    <link rel="stylesheet" href="{% static 'styles/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/system.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/loader.css' %}">
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-light">
+
+    <div id="loader-container" class="loader-container">
+        <div class="loader-spinner">
+            <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" id="cog9_1_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-13 -13 45 45" enable-background="new 0 0 96 96" xml:space="preserve"><style>.box5631 {
+                transform-origin: 50% 50%;
+                fill:#FBC02D;
+            }
+
+            @keyframes moveBox5631-1 {
+                9.0909090909% {
+                    transform: translate(-12px, 0);
+                }
+
+                18.1818181818% {
+                    transform: translate(0px, 0);
+                }
+
+                27.2727272727% {
+                    transform: translate(0px, 0);
+                }
+
+                36.3636363636% {
+                    transform: translate(12px, 0);
+                }
+
+                45.4545454545% {
+                    transform: translate(12px, 12px);
+                }
+
+                54.5454545455% {
+                    transform: translate(12px, 12px);
+                }
+
+                63.6363636364% {
+                    transform: translate(12px, 12px);
+                }
+
+                72.7272727273% {
+                    transform: translate(12px, 0px);
+                }
+
+                81.8181818182% {
+                    transform: translate(0px, 0px);
+                }
+
+                90.9090909091% {
+                    transform: translate(-12px, 0px);
+                }
+
+                100% {
+                    transform: translate(0px, 0px);
+                }
+            }
+
+            .box5631:nth-child(1) {
+                animation: moveBox5631-1 4s infinite;
+
+            }
+
+            @keyframes moveBox5631-2 {
+                9.0909090909% {
+                    transform: translate(0, 0);
+                }
+
+                18.1818181818% {
+                    transform: translate(12px, 0);
+                }
+
+                27.2727272727% {
+                    transform: translate(0px, 0);
+                }
+
+                36.3636363636% {
+                    transform: translate(12px, 0);
+                }
+
+                45.4545454545% {
+                    transform: translate(12px, 12px);
+                }
+
+                54.5454545455% {
+                    transform: translate(12px, 12px);
+                }
+
+                63.6363636364% {
+                    transform: translate(12px, 12px);
+                }
+
+                72.7272727273% {
+                    transform: translate(12px, 12px);
+                }
+
+                81.8181818182% {
+                    transform: translate(0px, 12px);
+                }
+
+                90.9090909091% {
+                    transform: translate(0px, 12px);
+                }
+
+                100% {
+                    transform: translate(0px, 0px);
+                }
+            }
+
+            .box5631:nth-child(2) {
+                animation: moveBox5631-2 4s infinite;
+            }
+
+            @keyframes moveBox5631-3 {
+                9.0909090909% {
+                    transform: translate(-12px, 0);
+                }
+
+                18.1818181818% {
+                    transform: translate(-12px, 0);
+                }
+
+                27.2727272727% {
+                    transform: translate(0px, 0);
+                }
+
+                36.3636363636% {
+                    transform: translate(-12px, 0);
+                }
+
+                45.4545454545% {
+                    transform: translate(-12px, 0);
+                }
+
+                54.5454545455% {
+                    transform: translate(-12px, 0);
+                }
+
+                63.6363636364% {
+                    transform: translate(-12px, 0);
+                }
+
+                72.7272727273% {
+                    transform: translate(-12px, 0);
+                }
+
+                81.8181818182% {
+                    transform: translate(-12px, -12px);
+                }
+
+                90.9090909091% {
+                    transform: translate(0px, -12px);
+                }
+
+                100% {
+                    transform: translate(0px, 0px);
+                }
+            }
+
+            .box5631:nth-child(3) {
+                animation: moveBox5631-3 4s infinite;
+            }
+
+            @keyframes moveBox5631-4 {
+                9.0909090909% {
+                    transform: translate(-12px, 0);
+                }
+
+                18.1818181818% {
+                    transform: translate(-12px, 0);
+                }
+
+                27.2727272727% {
+                    transform: translate(-12px, -12px);
+                }
+
+                36.3636363636% {
+                    transform: translate(0px, -12px);
+                }
+
+                45.4545454545% {
+                    transform: translate(0px, 0px);
+                }
+
+                54.5454545455% {
+                    transform: translate(0px, -12px);
+                }
+
+                63.6363636364% {
+                    transform: translate(0px, -12px);
+                }
+
+                72.7272727273% {
+                    transform: translate(0px, -12px);
+                }
+
+                81.8181818182% {
+                    transform: translate(-12px, -12px);
+                }
+
+                90.9090909091% {
+                    transform: translate(-12px, 0px);
+                }
+
+                100% {
+                    transform: translate(0px, 0px);
+                }
+            }
+
+            .box5631:nth-child(4) {
+                animation: moveBox5631-4 4s infinite;
+            }
+
+            @keyframes moveBox5631-5 {
+                9.0909090909% {
+                    transform: translate(0, 0);
+                }
+
+                18.1818181818% {
+                    transform: translate(0, 0);
+                }
+
+                27.2727272727% {
+                    transform: translate(0, 0);
+                }
+
+                36.3636363636% {
+                    transform: translate(12px, 0);
+                }
+
+                45.4545454545% {
+                    transform: translate(12px, 0);
+                }
+
+                54.5454545455% {
+                    transform: translate(12px, 0);
+                }
+
+                63.6363636364% {
+                    transform: translate(12px, 0);
+                }
+
+                72.7272727273% {
+                    transform: translate(12px, 0);
+                }
+
+                81.8181818182% {
+                    transform: translate(12px, -12px);
+                }
+
+                90.9090909091% {
+                    transform: translate(0px, -12px);
+                }
+
+                100% {
+                    transform: translate(0px, 0px);
+                }
+            }
+
+            .box5631:nth-child(5) {
+                animation: moveBox5631-5 4s infinite;
+            }
+
+            @keyframes moveBox5631-6 {
+                9.0909090909% {
+                    transform: translate(0, 0);
+                }
+
+                18.1818181818% {
+                    transform: translate(-12px, 0);
+                }
+
+                27.2727272727% {
+                    transform: translate(-12px, 0);
+                }
+
+                36.3636363636% {
+                    transform: translate(0px, 0);
+                }
+
+                45.4545454545% {
+                    transform: translate(0px, 0);
+                }
+
+                54.5454545455% {
+                    transform: translate(0px, 0);
+                }
+
+                63.6363636364% {
+                    transform: translate(0px, 0);
+                }
+
+                72.7272727273% {
+                    transform: translate(0px, 12px);
+                }
+
+                81.8181818182% {
+                    transform: translate(-12px, 12px);
+                }
+
+                90.9090909091% {
+                    transform: translate(-12px, 0px);
+                }
+
+                100% {
+                    transform: translate(0px, 0px);
+                }
+            }
+
+            .box5631:nth-child(6) {
+                animation: moveBox5631-6 4s infinite;
+            }
+
+            @keyframes moveBox5631-7 {
+                9.0909090909% {
+                    transform: translate(12px, 0);
+                }
+
+                18.1818181818% {
+                    transform: translate(12px, 0);
+                }
+
+                27.2727272727% {
+                    transform: translate(12px, 0);
+                }
+
+                36.3636363636% {
+                    transform: translate(0px, 0);
+                }
+
+                45.4545454545% {
+                    transform: translate(0px, -12px);
+                }
+
+                54.5454545455% {
+                    transform: translate(12px, -12px);
+                }
+
+                63.6363636364% {
+                    transform: translate(0px, -12px);
+                }
+
+                72.7272727273% {
+                    transform: translate(0px, -12px);
+                }
+
+                81.8181818182% {
+                    transform: translate(0px, 0px);
+                }
+
+                90.9090909091% {
+                    transform: translate(12px, 0px);
+                }
+
+                100% {
+                    transform: translate(0px, 0px);
+                }
+            }
+
+            .box5631:nth-child(7) {
+                animation: moveBox5631-7 4s infinite;
+            }
+
+            @keyframes moveBox5631-8 {
+                9.0909090909% {
+                    transform: translate(0, 0);
+                }
+
+                18.1818181818% {
+                    transform: translate(-12px, 0);
+                }
+
+                27.2727272727% {
+                    transform: translate(-12px, -12px);
+                }
+
+                36.3636363636% {
+                    transform: translate(0px, -12px);
+                }
+
+                45.4545454545% {
+                    transform: translate(0px, -12px);
+                }
+
+                54.5454545455% {
+                    transform: translate(0px, -12px);
+                }
+
+                63.6363636364% {
+                    transform: translate(0px, -12px);
+                }
+
+                72.7272727273% {
+                    transform: translate(0px, -12px);
+                }
+
+                81.8181818182% {
+                    transform: translate(12px, -12px);
+                }
+
+                90.9090909091% {
+                    transform: translate(12px, 0px);
+                }
+
+                100% {
+                    transform: translate(0px, 0px);
+                }
+            }
+
+            .box5631:nth-child(8) {
+                animation: moveBox5631-8 4s infinite;
+            }
+
+            @keyframes moveBox5631-9 {
+                9.0909090909% {
+                    transform: translate(-12px, 0);
+                }
+
+                18.1818181818% {
+                    transform: translate(-12px, 0);
+                }
+
+                27.2727272727% {
+                    transform: translate(0px, 0);
+                }
+
+                36.3636363636% {
+                    transform: translate(-12px, 0);
+                }
+
+                45.4545454545% {
+                    transform: translate(0px, 0);
+                }
+
+                54.5454545455% {
+                    transform: translate(0px, 0);
+                }
+
+                63.6363636364% {
+                    transform: translate(-12px, 0);
+                }
+
+                72.7272727273% {
+                    transform: translate(-12px, 0);
+                }
+
+                81.8181818182% {
+                    transform: translate(-24px, 0);
+                }
+
+                90.9090909091% {
+                    transform: translate(-12px, 0);
+                }
+
+                100% {
+                    transform: translate(0px, 0);
+                }
+            }
+
+            .box5631:nth-child(9) {
+                animation: moveBox5631-9 4s infinite;
+            }</style><g><circle class="box5631" cx="13" cy="1" r="5"/><circle class="box5631" cx="13" cy="1" r="5"/><circle class="box5631" cx="25" cy="25" r="5"/><circle class="box5631" cx="13" cy="13" r="5"/><circle class="box5631" cx="13" cy="13" r="5"/><circle class="box5631" cx="25" cy="13" r="5"/><circle class="box5631" cx="1" cy="25" r="5"/><circle class="box5631" cx="13" cy="25" r="5"/><circle class="box5631" cx="25" cy="25" r="5"/></g></svg>
+        </div>
+    </div>
+    
+    <div class="d-flex" id="wrapper">
+        <div class="bg-dark-brown border-right" id="sidebar-wrapper">
+            <div class="sidebar-heading text-light text-center py-4 fs-4 fw-bold d-flex justify-content-evenly align-items-center">
+                <h2 style="margin: 0;">Menú Principal</h2>
+                <button class="btn btn-primary d-md-none" id="menu-toggle">
+                    <i id="menu-icon" class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="list-group list-group-flush">
+                <a href="{% url 'dashboard' %}" class="list-group-item list-group-item-action bg-dark-brown text-light-beige border-0">
+                    <i class="fas fa-chart-line me-2"></i>Dashboard
+                </a>
+                <a href="#" class="list-group-item list-group-item-action bg-dark-brown text-light-beige border-0">
+                    <i class="fas fa-users-cog me-2"></i>Gestión de Usuarios
+                </a>
+                <a href="#" class="list-group-item list-group-item-action bg-dark-brown text-light-beige border-0">
+                    <i class="fas fa-box-open me-2"></i>Productos
+                </a>
+                <form action="{% url 'logout' %}" method="post" style="width:100%;">
+                    {% csrf_token %}
+                    <button type="submit" class="list-group-item list-group-item-action bg-dark-brown text-light-beige border-0">
+                        <i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <div id="page-content-wrapper">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                <div class="container-fluid">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <button class="btn btn-primary d-md-none me-2" id="menu-toggle-open">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                        
+                        <div class="navbar-brand d-flex align-items-center">
+                            <img src="{% static 'img/favicon_transparente.png' %}" alt="Logo" class="me-2">
+                            <h1>Agropecuaria Guardia Ramirez</h1>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container-fluid py-4">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/core/loader.js' %}"></script>
+    
+    {% block extra_js %}{% endblock %}
+
+    <script>
+        // Botón para abrir el menú (en la navbar)
+        document.getElementById("menu-toggle-open").addEventListener("click", function(e) {
+            e.preventDefault();
+            document.getElementById("wrapper").classList.add("toggled");
+        });
+
+        // Botón para cerrar el menú (en la barra lateral)
+        document.getElementById("menu-toggle").addEventListener("click", function(e) {
+            e.preventDefault();
+            document.getElementById("wrapper").classList.remove("toggled");
+        });
+    </script>
+</body>
+</html>

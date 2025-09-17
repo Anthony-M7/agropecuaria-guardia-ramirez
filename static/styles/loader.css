@@ -1,0 +1,23 @@
+.loader-container {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Capa semi-transparente que bloquea la interacción */
+    z-index: 9999; /* Asegura que esté por encima de todo el contenido */
+    justify-content: center;
+    align-items: center;
+}
+
+.loader-spinner {
+    width: 60px;
+    height: 60px;
+    animation: spin 1.2s linear infinite; /* Animación de giro */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

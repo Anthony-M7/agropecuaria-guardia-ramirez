@@ -1,0 +1,198 @@
+/* #region Variables */
+
+/* Paleta de colores */
+:root {
+    --deep-blue: #263238;
+    --pure-white: #FFFFFF;
+    --primary-green: #689F38;
+    --bright-yellow: #FBC02D;
+    --dark-brown: #4E342E;
+    --accent-red: #E53935;
+    --soft-beige: #FBF8F0;
+    --medium-gray: #757575;
+}
+/* #endregion */
+
+
+/* #region header */
+/* --- Estilos para móviles (por defecto, mobile-first) --- */
+.header {
+    background-color: var(--pure-white);
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 100%;
+}
+
+.header-logo {
+    height: 40px; /* Tamaño del logo un poco más pequeño para móviles */
+}
+
+.company-name {
+    color: var(--dark-brown);
+    /* Título con tamaño fluido y truncado */
+    font-size: clamp(0.75rem, 4vw, 3rem); 
+     /* Handle text overflow with ellipsis */
+    white-space: nowrap; /* Prevent text from wrapping to the next line */
+    overflow: hidden; /* Hide content that overflows */
+    text-overflow: ellipsis; /* Display ellipsis (...) for clipped text */
+}
+
+.return-link {
+    text-decoration: none;
+    padding: 6px 10px; /* Padding más pequeño */
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+.logo-container{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow: hidden; /* Hide anything that overflows the flex container */
+}
+
+/* #endregion */
+
+
+/* #region estilos colores */
+body.bg-light-beige {
+    background-color: var(--soft-beige);
+}
+
+.bg-deep-blue {
+    background-color: var(--deep-blue) !important;
+}
+
+.main-text-color {
+    color: var(--dark-brown) !important;
+}
+
+.secondary-text-color {
+    color: var(--medium-gray) !important;
+}
+/* #endregion */
+
+
+/* #region botones del login */
+.btn-primary-main {
+    background-color: var(--primary-green);
+    color: var(--pure-white);
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary-main:hover {
+    background-color: var(--bright-yellow);
+    color: var(--dark-brown);
+}
+
+.btn-secondary-main {
+    background-color: var(--dark-brown);
+    color: var(--pure-white);
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-secondary-main:hover {
+    background-color: var(--accent-red);
+}
+
+.secondary-button-text {
+    color: var(--dark-brown) !important;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.secondary-button-text:hover {
+    color: var(--accent-red) !important;
+}
+
+/* #endregion */
+
+
+/* #region login card */
+.login-card {
+    max-width: 400px;
+    width: 95%; /* Ocupa casi todo el ancho para un mejor uso del espacio */
+    margin: 20px auto; /* Centrado y con margen */
+    padding: 20px;
+}
+
+.login-logo {
+    width: 120px; /* Logo más pequeño en la tarjeta de login */
+}
+/* #endregion */
+
+
+/* #region Fondo dinamico de fotos */
+#background-slideshow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: background-image 2s ease-in;
+}
+
+#background-slideshow::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Capa de opacidad negra */
+}
+
+/* #endregion */
+
+
+
+/* #region MediaQuerys */
+/* --- Estilos para pantallas más grandes (a partir de 576px) --- */
+@media (min-width: 425px) {
+    .header {
+        justify-content: space-between; /* Aumenta el tamaño del logo */
+    }
+}
+
+/* --- Estilos para pantallas más grandes (a partir de 576px) --- */
+@media (min-width: 576px) {
+    .header-logo {
+        height: 50px; /* Aumenta el tamaño del logo */
+    }
+
+    .company-name {
+        font-size: clamp(1.5rem, 3vw, 2rem);
+    }
+
+    .return-link {
+        padding: 8px 15px; /* Aumenta el padding del botón */
+        font-size: 1rem;
+    }
+
+    .login-card {
+        width: 90%; /* Ancho un poco más pequeño para dejar más espacio en los lados */
+    }
+
+    .login-logo {
+        width: 150px; /* Tamaño original del logo */
+    }
+}
+
+/* --- Estilos para pantallas de escritorio (a partir de 992px) --- */
+@media (min-width: 992px) {
+    .header {
+        padding: 1.5rem 3rem;
+    }
+
+    .company-name {
+        font-size: 2rem;
+    }
+}
+/* #endregion */
