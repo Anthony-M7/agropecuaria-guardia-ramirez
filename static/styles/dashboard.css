@@ -1,0 +1,75 @@
+:root {
+    /* Paleta de colores */
+    --azul-marino: #263238;
+    --verde-principal: #689F38;
+    --amarillo-brillante: #FBC02D;
+    --marron-oscuro: #4E342E;
+    --rojo-acento: #E53935;
+    --blanco-puro: #FFFFFF;
+    --beige-suave: #FBF8F0;
+    --gris-medio: #757575;
+}
+
+/* Base de la cuadrícula y encabezado */
+.content-header {
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--gris-medio); /* Color del borde para subtítulos */
+    padding-bottom: 10px;
+
+    h1{
+        margin: 0;
+        margin-bottom: .7rem;
+    }
+    p{
+        margin: 0;
+    }
+}
+
+.dashboard-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+.section-content{
+    background-color: var(--blanco-puro);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.section-title{
+    font-size: clamp(1rem, 2.5vw, 2rem);
+    margin-bottom: 15px;
+    color: var(--azul-marino);
+}
+
+
+/* Estilos para las celdas de la tabla con truncamiento */
+.section-content table td, .section-content table th {
+    max-width: 150px; /* Ajusta este valor según el ancho de tu columna */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+
+
+
+@media (min-width: 768px) {
+    .badge-nivel{
+        background-color: var(--marron-oscuro) !important;
+    }
+    .bg-brown{
+        background-color: var(--marron-oscuro) !important;
+    }
+    .bg-brown-btn-outline:checked+.btn{
+        background-color: var(--marron-oscuro) !important;
+        border-color: var(--marron-oscuro) !important;
+    }
+    .bg-brown-btn-outline+.btn{
+        border-color: var(--marron-oscuro);
+        color: var(--marron-oscuro);
+    }
+}

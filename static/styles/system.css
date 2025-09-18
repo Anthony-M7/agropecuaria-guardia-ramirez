@@ -32,10 +32,11 @@ body {
     top: 0;
     left: -15rem; /* Oculto por defecto */
     z-index: 1000;
-    height: 100vh;
+    height:100vh;
     width: 15rem;
     transition: all 0.25s ease-out;
     background-color: var(--dark-brown);
+    z-index: 10000;
 }
 /* Añade esto a tu archivo system.css */
 #menu-icon {
@@ -78,7 +79,7 @@ body {
     background-color: var(--light-gray);
     max-width: 100%;
     width: 100%;
-    height: 100vh;
+    height: auto;
 }
 
 /* Aqui se genera el contenido */
@@ -140,6 +141,12 @@ body {
     text-overflow: ellipsis; /* Display ellipsis (...) for clipped text */
 }
 
+.nav-system{
+    position: sticky;
+    top: 0px;
+    z-index: 9999;
+}
+
 /* #endregion */
 
 
@@ -149,10 +156,17 @@ body {
 @media (min-width: 768px) {
     #sidebar-wrapper {
         margin-left: 0; /* Visible por defecto */
-        position: relative;
+        position: sticky;
+        top: 0px;
         left: 0;
     }
     
+    .nav-system{
+        position: sticky;
+        top: 0px;
+        z-index: 999999999999;
+    }
+
     #page-content-wrapper {
         min-width: 0;
         width: 100%;
@@ -166,6 +180,31 @@ body {
     .navbar-brand img {
         height: 50px;
     }
+    
+    /* Option 3: Lighter, more elegant transition */
+    .notificaciones-btn {
+        background-color: var(--dark-brown);
+        color: var(--pure-white); /* Ensures text is visible */
+        border-color: var(--dark-brown);
+        transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
 
+    .notificaciones-btn:hover {
+        background-color: var(--soft-beige); /* A lighter, elegant transition */
+        border-color: var(--soft-beige);
+        color: var(--dark-brown); /* Changes text color for visibility */
+    }
+
+    .notificaciones-btn:focus {
+        background-color: var(--soft-beige);
+        border-color: var(--soft-beige);
+        color: var(--dark-brown);
+        box-shadow: 0 0 0 0.2rem rgba(251, 248, 240, 0.5); /* Semi-transparent beige */
+    }
+
+    .notificaciones-btn:active {
+        background-color: var(--dark-brown) !important;
+        border-color: var(--dark-brown) !important;
+    }
 }
 /* #endregion */

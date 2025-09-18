@@ -507,16 +507,22 @@
         </div>
         
         <div id="page-content-wrapper">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                <div class="container-fluid">
-                    <div class="d-flex align-items-center justify-content-between">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom nav-system">
+                <div class="container-fluid px-2">
+                    <div class="d-flex align-items-center justify-content-between" style="width: 100%;">
                         <button class="btn btn-primary d-md-none me-2" id="menu-toggle-open">
                             <i class="fas fa-bars"></i>
                         </button>
-                        
-                        <div class="navbar-brand d-flex align-items-center">
-                            <img src="{% static 'img/favicon_transparente.png' %}" alt="Logo" class="me-2">
-                            <h1>Agropecuaria Guardia Ramirez</h1>
+
+                        <div class="navbar-brand d-flex align-items-center gap-0">
+                            <img src="{% static 'img/favicon_transparente.png' %}" alt="Logo">
+                            <h1 class="flex-grow-1">Agropecuaria Guardia Ramirez</h1>
+                        </div>
+
+                        <div class="d-flex align-items-center">
+                            <button class="btn btn-success notificaciones-btn" id="notification-btn" title="Notificaciones">
+                                <i class="fas fa-bell"></i>
+                            </button>
                         </div>
                     </div>
                 </div>

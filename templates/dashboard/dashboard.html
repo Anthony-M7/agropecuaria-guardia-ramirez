@@ -1,7 +1,440 @@
 {% extends 'dashboard/base_system.html' %}
 
+{% load static %}
+
 {% block title %}Dashboard{% endblock %}
 
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'styles/dashboard.css' %}">
+{% endblock %}
+
 {% block content %}
-    <h2>¡Bienvenido al Dashboard!</h2>
+    <div class="content-header">
+        <div class="d-flex flex-column justify-content-between align-items-center mb-3 border-bottom w-100">
+            <h1>
+                Dashboard
+                <span class="badge bg-success text-white mb-1 badge-nivel">
+                    {{ user.profile.nivel_usuario|capfirst }}
+                </span>
+            </h1>
+            <h5 class="text-muted text-center">
+                <span class="fas fa-user" aria-label="Usuario"></span>
+                Bienvenido, {{ user.first_name }}
+            </h5>
+        </div>
+        <p>Bienvenido al panel de control. Aquí puedes ver un resumen de la información más importante.</p>
+    </div>
+
+    <div class="dashboard-grid">
+        {% if user.profile.nivel_usuario == 'admin' %}
+        <!-- Configuraciones -->
+        <section class="section-content card">
+            <h2 class="section-title">Configuración Administrativa</h2>
+            <p class="section-subtitle">Ajustes del sistema.</p>
+            
+            <form method="post">
+                {% csrf_token %}
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="">
+                            <label for="admin-settings-cop" class="form-label text-muted">Tasa de Cambio (COP)</label>
+                            <input type="text" id="admin-settings-cop" class="form-control" placeholder="Tasa COP-USD">
+                            <small class="text-muted mt-2">Actual: 4000 COP = 1$</small>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="">
+                            <label for="admin-settings-bs" class="form-label text-muted">Tasa de Cambio (BS)</label>
+                            <input type="text" id="admin-settings-bs" class="form-control" placeholder="Tasa BS-USD">
+                            <small class="text-muted mt-2">Actual: 180 BS = 1$</small>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="">
+                            <label for="mostrar_precios_en" class="form-label text-muted">Mostrar Precios En</label>
+                            <select name="mostrar_precios_en" id="mostrar_precios_en" class="form-select">
+                                <option value="">Seleccione una Opción</option>
+                                <option value="COP">COP - Pesos Colombianos</option>
+                                <option value="USD">USD - Dólares Estadounidenses</option>
+                                <option value="BS">BS - Bolívares</option>
+                            </select>
+                            <small class="text-muted mt-2">Actual: COP</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 d-flex gap-2 align-items-center justify-content-center">
+                    <button type="submit" class="btn btn-success notificaciones-btn">Guardar</button>
+                    <button type="reset" class="btn btn-secondary">Cancelar</button>
+                </div>
+            </form>
+        </section>
+        {% endif %}
+
+        <section class="section-content card">
+            <h2 class="section-title">Resumen General</h2>
+            <p class="section-subtitle">Resumen general de sus ventas registradas.</p>
+
+            <div class="row g-4">
+                <section class="col-lg-4">
+                    <div class="bg-success bg-brown rounded-2 p-2 d-flex flex-column text-white text-center fs-5 h-100">
+                        <h3>Productos Vendidos</h3>
+                        <span><i class="fa-solid fa-boxes-stacked"></i> Alimento Pro-Cria x2</span>
+                        <span><i class="fa-solid fa-boxes-stacked"></i> Bebedero x1</span>
+                        <span><i class="fa-solid fa-boxes-stacked"></i> Alimento Colpaca x3</span>
+                    </div>
+                </section>
+
+                <section class="col-lg-4">
+                    <div class="bg-success bg-brown rounded-2 p-2 d-flex flex-column text-white text-center fs-5 h-100">
+                        <h3>Monto Por Ventas</h3>
+                        <span><i class="fa-solid fa-money-bill"></i> +12$</span>
+                        <span><i class="fa-solid fa-money-bill"></i> +25$</span>
+                        <span><i class="fa-solid fa-money-bill"></i> +17$</span>
+                    </div>
+                </section>
+                <section class="col-lg-4">
+                    <div class="bg-success bg-brown p-2 rounded-2 d-flex flex-column text-white text-center fs-5 h-100">
+                        <h3>Monto Por Gastos</h3>
+                        <span><i class="fa-solid fa-wallet"></i> Ninguna</span>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        {% if user.profile.nivel_usuario == "admin" %}
+        <!-- Filters -->
+        <section class="section-content card">
+            <h2 class="section-title">Opciones</h2>
+            <p class="section-subtitle">Cambiar opciones para el muestreo de las estadisticas del panel.</p>
+
+            <form method="post" class="d-flex justify-content-center">
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check bg-brown-btn-outline" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                    <label class="btn btn-outline-success" for="btnradio1">Diario</label>
+
+                    <input type="radio" class="btn-check bg-brown-btn-outline" name="btnradio" id="btnradio2" autocomplete="off">
+                    <label class="btn btn-outline-success" for="btnradio2">Mensual</label>
+
+                    <input type="radio" class="btn-check bg-brown-btn-outline" name="btnradio" id="btnradio3" autocomplete="off">
+                    <label class="btn btn-outline-success" for="btnradio3">Anual</label>
+                </div>
+            </form>
+
+            <!-- <p class="text-muted text-center mt-2">Actual: Diario. Mostrando Datos desde el 18-09-2025 00:00 am Hasta Ahora (18-09-2025 10:41am)</p> -->
+            <!-- <p class="text-muted text-center mt-2">Actual: Mensual. Mostrando Datos desde el 01-09-2025 Hasta Ahora (18-09-2025)</p> -->
+            <p class="text-muted text-center mt-2">Actual: Anual. Mostrando Datos desde el 01-01-2025 Hasta Ahora (18-09-2025)</p>
+        </section>
+
+        
+        <div class="row g-4">
+            <!-- Balance en número + gráfica -->
+            <div class="col-lg-6 col-12">
+                <section class="section-content card h-100">
+                    <h2 class="section-title">Balance Diario (Compras y Ventas)</h2>
+                    <p class="section-subtitle">Resumen de las ingresos y egresos del día.</p>
+                    <div class="row">
+                        <div class="col-md-4 d-flex flex-column align-items-center">
+                            <span class="badge text-success text-center">+$1,200.00</span>
+                            <p class="text-muted text-center">Ventas Hoy</p>
+                        </div>
+                        <div class="col-md-4 d-flex flex-column align-items-center">
+                            <span class="badge text-danger text-center">-$800.00</span>
+                            <p class="text-muted text-center">Compras Hoy</p>
+                        </div>
+                        <div class="col-md-4 d-flex flex-column align-items-center">
+                            <span class="badge text-primary text-center">$400.00</span>
+                            <p class="text-muted text-center">Balance Neto</p>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <canvas id="daily-balance-chart" height="200"></canvas>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Productos más vendidos -->
+            <div class="col-lg-6 col-12">
+                <section class="section-content card h-100">
+                    <h2 class="section-title">Productos Más Vendidos</h2>
+                    <p class="section-subtitle">Productos con mayor demanda en los últimos días.</p>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Producto</th>
+                                    <th class="text-center">Cantidad Vendida</th>
+                                    <th class="text-center">Ingresos Generados</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center">Fertilizante ABC</td>
+                                    <td class="text-center">150 Unidades</td>
+                                    <td class="text-center"><span class="badge bg-success bg-brown rounded-pill">195$</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">Semillas XYZ</td>
+                                    <td class="text-center">120 Unidades</td>
+                                    <td class="text-center"><span class="badge bg-success bg-brown rounded-pill">130$</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">Herbicida 123</td>
+                                    <td class="text-center">90 Unidades</td>
+                                    <td class="text-center"><span class="badge bg-success bg-brown rounded-pill">90$</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+            
+            <!-- Empleados con más ventas -->
+            <div class="col-12">  
+                <section class="section-content card h-100">
+                    <h2 class="section-title">Empleados Con Más Ventas</h2>
+                    <p class="section-subtitle">Empleado con más ventas registradas.</p>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Empleado</th>
+                                    <th class="text-center">Ventas Registradas</th>
+                                    <th class="text-center">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center">Fernando Mora</td>
+                                    <td class="text-center">5 Venta(s)</td>
+                                    <td class="text-center"><span class="badge bg-success bg-brown rounded-pill">110$</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">Ana Mora</td>
+                                    <td class="text-center">1 Venta(s)</td>
+                                    <td class="text-center"><span class="badge bg-success bg-brown rounded-pill">12$</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">Jorge Gallo</td>
+                                    <td class="text-center">3 Venta(s)</td>
+                                    <td class="text-center"><span class="badge bg-success bg-brown rounded-pill">16$</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Ultimas Entradas de Productos -->
+            <div class="col-lg-6 col-12">
+                <section class="section-content card h-100">
+                    <h2 class="section-title">Entradas de Productos Recientes</h2>
+                    <p class="section-subtitle">Recientes Entradas de Productos</p>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Producto</th>
+                                    <th class="text-center">Cantidad</th>
+                                    <th class="text-center">Fecha</th>
+                                    <th class="text-center">Proveedor</th>
+                                    <th class="text-center">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center">Alimento Procria 45Kg</td>
+                                    <td class="text-center">25 Bulto(s)</td>
+                                    <td class="text-center">11-10-2025</td>
+                                    <td class="text-center">Alimentos Polar C.A.</td>
+                                    <td class="text-center"><span class="badge bg-success bg-brown rounded-pill">170$</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">Bebedero de Pollo 20Ltrs</td>
+                                    <td class="text-center">15 Unidade(s)</td>
+                                    <td class="text-center">15-02-2025</td>
+                                    <td class="text-center">Julio Cesar Distributions</td>
+                                    <td class="text-center"><span class="badge bg-success bg-brown rounded-pill">145$</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Ventas Recientes -->
+            <div class="col-lg-6 col-12">
+                <section class="section-content card h-100">
+                    <h2 class="section-title">Ventas de Productos Recientes</h2>
+                    <p class="section-subtitle">Ventas recientes.</p>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Cliente</th>
+                                    <th class="text-center">Fecha</th>
+                                    <th class="text-center">Hora</th>
+                                    <th class="text-center">Cantidad Vendida</th>
+                                    <th class="text-center">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center">Anthony Mora</td>
+                                    <td class="text-center">11-12-2025</td>
+                                    <td class="text-center">10am</td>
+                                    <td class="text-center">2 productos</td>
+                                    <td class="text-center"><span class="badge bg-success bg-brown rounded-pill">19$</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">Eber Colmenares</td>
+                                    <td class="text-center">10-12-2025</td>
+                                    <td class="text-center">12pm</td>
+                                    <td class="text-center">2 productos</td>
+                                    <td class="text-center"><span class="badge bg-success bg-brown rounded-pill">13$</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">Andreina Guardia</td>
+                                    <td class="text-center">19-12-2025</td>
+                                    <td class="text-center">3pm</td>
+                                    <td class="text-center">3 productos</td>
+                                    <td class="text-center"><span class="badge bg-success bg-brown rounded-pill">65$</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Marcas Populares -->
+            <div class="col-lg-6 col-12">
+                <section class="section-content card h-100">
+                    <h2 class="section-title">Marcas Populares</h2>
+                    <p class="section-subtitle">Marcas que más venden</p>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Marca</th>
+                                    <th class="text-center">Productos de la Marca</th>
+                                    <th class="text-center">Ganancias en Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center">Procria</td>
+                                    <td class="text-center">34 Producto(s)</td>
+                                    <td class="text-center"><span class="badge bg-success bg-brown rounded-pill">2500$</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">Marca2</td>
+                                    <td class="text-center">27 Producto(s)</td>
+                                    <td class="text-center"><span class="badge bg-success bg-brown rounded-pill">1752$</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">Marca3</td>
+                                    <td class="text-center">31 Producto(s)</td>
+                                    <td class="text-center"><span class="badge bg-success bg-brown rounded-pill">652$</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Clientes Acreditados -->
+            <div class="col-lg-6 col-12">
+                <section class="section-content card h-100">
+                    <h2 class="section-title">Clientes Con Credito</h2>
+                    <p class="section-subtitle">Clientes que tienen creditos que no han pagado o estan pendientes por pagar.</p>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Nombre</th>
+                                    <th class="text-center">Fecha desde proporcionado el credito</th>
+                                    <th class="text-center">Credito Total</th>
+                                    <th class="text-center">Pagado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center">Brigith Gonzalez</td>
+                                    <td class="text-center">12-10-2025</td>
+                                    <td class="text-center"><span class="badge bg-success bg-brown rounded-pill">1250$</span></td>
+                                    <td class="text-center"><span class="badge bg-success bg-brown rounded-pill">0$</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">Cliente2</td>
+                                    <td class="text-center">11-11-2025</td>
+                                    <td class="text-center"><span class="badge bg-success bg-brown rounded-pill">152$</span></td>
+                                    <td class="text-center"><span class="badge bg-success bg-brown rounded-pill">15$</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">Cliente3</td>
+                                    <td class="text-center">12-12-2025</td>
+                                    <td class="text-center"><span class="badge bg-success bg-brown rounded-pill">620$</span></td>
+                                    <td class="text-center"><span class="badge bg-success bg-brown rounded-pill">120$</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+{% endblock %}
+
+
+{% block extra_js %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('daily-balance-chart').getContext('2d');
+        const dailyBalanceChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
+                datasets: [
+                    {
+                        label: 'Ventas',
+                        data: [200, 300, 250, 400, 350, 500, 450],
+                        borderColor: 'rgba(40, 167, 69, 1)',
+                        backgroundColor: 'rgba(40, 167, 69, 0.2)',
+                        fill: true,
+                        tension: 0.4
+                    },
+                    {
+                        label: 'Compras',
+                        data: [150, 200, 180, 220, 200, 250, 300],
+                        borderColor: 'rgba(220, 53, 69, 1)',
+                        backgroundColor: 'rgba(220, 53, 69, 0.2)',
+                        fill: true,
+                        tension: 0.4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false, // <-- ¡Este es el ajuste clave!
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Balance Diario de Compras y Ventas'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 {% endblock %}
