@@ -5,8 +5,10 @@ cloudinary==1.44.1
 dj-database-url==3.0.1
 Django==5.2.6
 django-cloudinary-storage==0.3.0
+gunicorn==23.0.0
 idna==3.10
 jmespath==1.0.1
+packaging==25.0
 pillow==11.3.0
 python-dateutil==2.9.0.post0
 python-dotenv==1.1.1
