@@ -10,13 +10,19 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 DEBUG = False
 
 # Debes listar todos los dominios de tu aplicación en producción
-ALLOWED_HOSTS = ['tu_dominio.com', 'www.tu_dominio.com']
+ALLOWED_HOSTS = ['*']
 
-
-# Database
 DATABASES = {
-    'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
+
+# # Database
+# DATABASES = {
+#     'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
+# }
 
 # Configuración de Seguridad para HTTPS (Muy importante en producción)
 SECURE_SSL_REDIRECT = True

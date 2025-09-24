@@ -18,8 +18,8 @@ venv.bak/
 *.pyc
 db.sqlite3
 media/
-staticfiles/
 local_settings.py
+staticfiles/
 
 # VS Code
 .vscode/

@@ -1,0 +1,8 @@
+services:
+  # Un servicio para la aplicación web de Django
+  - type: web
+    name: agropecuaria-guardia
+    env: python
+    buildCommand: "./build.sh"  # Usa un script para el proceso de construcción
+    startCommand: "gunicorn --bind 0.0.0.0:10000 central_proyect.wsgi:application"
+    plan: starter  # Opcional, especifica el plan
