@@ -494,7 +494,7 @@
                 <a href="#" class="list-group-item list-group-item-action bg-dark-brown text-light-beige border-0">
                     <i class="fas fa-users-cog me-2"></i>Gestión de Usuarios
                 </a>
-                <a href="#" class="list-group-item list-group-item-action bg-dark-brown text-light-beige border-0">
+                <a href="{% url 'productos' %}" class="list-group-item list-group-item-action bg-dark-brown text-light-beige border-0">
                     <i class="fas fa-box-open me-2"></i>Productos
                 </a>
                 <form action="{% url 'logout' %}" method="post" style="width:100%;">
@@ -534,9 +534,110 @@
         </div>
     </div>
     
+    <button 
+        class="btn btn-outline-success btn-outline-brown btn-lg rounded-circle shadow-lg" 
+        style="position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; z-index: 1050;"
+        data-bs-toggle="modal" 
+        data-bs-target="#configuracionModal"
+        aria-label="Abrir Configuración"
+    >
+        <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22 19V22H2V19C2 18.45 2.45 18 3 18H21C21.55 18 22 18.45 22 19Z" 
+                stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" 
+                stroke-linecap="round" stroke-linejoin="round" fill="none"></path> 
+                
+            <path d="M7 11H5V18H7V11Z" fill="currentColor"></path> 
+            <path d="M11 11H9V18H11V11Z" fill="currentColor"></path>
+            <path d="M15 11H13V18H15V11Z" fill="currentColor"></path>
+            <path d="M19 11H17V18H19V11Z" fill="currentColor"></path>
+
+            <path d="M23 22.75H1C0.59 22.75 0.25 22.41 0.25 22C0.25 21.59 0.59 21.25 1 21.25H23C23.41 21.25 23.75 21.59 23.75 22C23.75 22.41 23.41 22.75 23 22.75Z" 
+                stroke="currentColor" stroke-width="1.5" fill="none"></path>
+
+            <path d="M21.37 5.74984L12.37 2.14984C12.17 2.06984 11.83 2.06984 11.63 2.14984L2.63 5.74984C2.28 5.88984 2 6.29984 2 6.67984V9.99984C2 10.5498 2.45 10.9998 3 10.9998H21C21.55 10.9998 22 10.5498 22 9.99984V6.67984C22 6.29984 21.72 5.88984 21.37 5.74984ZM12 8.49984C11.17 8.49984 10.5 7.82984 10.5 6.99984C10.5 6.16984 11.17 5.49984 12 5.49984C12.83 5.49984 13.5 6.16984 13.5 6.99984C13.5 7.82984 12.83 8.49984 12 8.49984Z" 
+                stroke="currentColor" stroke-width="1.5" fill="currentColor"></path> 
+        </svg>
+    </button>
+
+    <div class="modal fade" id="configuracionModal" tabindex="-1" aria-labelledby="configuracionModalLabel" aria-hidden="true" style="z-index: 100000;">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content shadow-lg border-success border-brown">
+                <form method="post" action="{% url 'guardar_configuracion' %}">
+                    {% csrf_token %}
+                    
+                    <div class="modal-header bg-success bg-brown text-white">
+                        <h5 class="modal-title" id="configuracionModalLabel">
+                            <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M22 19V22H2V19C2 18.45 2.45 18 3 18H21C21.55 18 22 18.45 22 19Z" 
+                                    stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" 
+                                    stroke-linecap="round" stroke-linejoin="round" fill="none"></path> 
+                                    
+                                <path d="M7 11H5V18H7V11Z" fill="currentColor"></path> 
+                                <path d="M11 11H9V18H11V11Z" fill="currentColor"></path>
+                                <path d="M15 11H13V18H15V11Z" fill="currentColor"></path>
+                                <path d="M19 11H17V18H19V11Z" fill="currentColor"></path>
+
+                                <path d="M23 22.75H1C0.59 22.75 0.25 22.41 0.25 22C0.25 21.59 0.59 21.25 1 21.25H23C23.41 21.25 23.75 21.59 23.75 22C23.75 22.41 23.41 22.75 23 22.75Z" 
+                                    stroke="currentColor" stroke-width="1.5" fill="none"></path>
+
+                                <path d="M21.37 5.74984L12.37 2.14984C12.17 2.06984 11.83 2.06984 11.63 2.14984L2.63 5.74984C2.28 5.88984 2 6.29984 2 6.67984V9.99984C2 10.5498 2.45 10.9998 3 10.9998H21C21.55 10.9998 22 10.5498 22 9.99984V6.67984C22 6.29984 21.72 5.88984 21.37 5.74984ZM12 8.49984C11.17 8.49984 10.5 7.82984 10.5 6.99984C10.5 6.16984 11.17 5.49984 12 5.49984C12.83 5.49984 13.5 6.16984 13.5 6.99984C13.5 7.82984 12.83 8.49984 12 8.49984Z" 
+                                    stroke="currentColor" stroke-width="1.5" fill="currentColor"></path> 
+                            </svg>
+                            Ajustes de Precios y Moneda
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    
+                    <div class="modal-body">
+                        <input type="hidden" name="config_id" value="{{ configuracion_obj.pk }}">
+                        
+                        <p class="text-muted small mb-4 border-bottom pb-2">
+                            Configure la tasa de conversión y la moneda de visualización para el sistema.
+                        </p>
+
+                        <div class="mb-3">
+                            <label for="tasa_cop" class="form-label fw-bold">Tasa de COP (Peso Colombiano)</label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input type="number" step="0.0001" class="form-control form-control-lg" id="tasa_cop" name="tasa_cambio_cop" 
+                                    value="{{ configuracion_obj.tasa_cambio_cop|stringformat:'f' }}" required aria-label="Tasa de cambio COP">
+                            </div>
+                            <div class="form-text">Valor de 1 USD en COP.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="tasa_bs" class="form-label fw-bold">Tasa de BS (Bolívar)</label>
+                            <div class="input-group">
+                                <span class="input-group-text">Bs</span>
+                                <input type="number" step="0.0001" class="form-control form-control-lg" id="tasa_bs" name="tasa_cambio_bs" 
+                                    value="{{ configuracion_obj.tasa_cambio_bs|stringformat:'f' }}" required aria-label="Tasa de cambio BS">
+                            </div>
+                            <div class="form-text">Valor de 1 USD en Bolívares.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="moneda_display" class="form-label fw-bold">Moneda para Mostrar Precios</label>
+                            <select class="form-select form-select-lg" id="moneda_display" name="mostrar_precios" required>
+                                <option value="USD" {% if configuracion_obj.mostrar_precios == 'USD' %}selected{% endif %}>Dólar Americano (USD)</option>
+                                <option value="COP" {% if configuracion_obj.mostrar_precios == 'COP' %}selected{% endif %}>Peso Colombiano (COP)</option>
+                                <option value="BS" {% if configuracion_obj.mostrar_precios == 'BS' %}selected{% endif %}>Bolívar (BS)</option>
+                            </select>
+                            <div class="form-text">Moneda en la que se visualizarán los precios en el inventario.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-success shadow btn-brown">Guardar Cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{% static 'js/core/loader.js' %}"></script>
-    
     {% block extra_js %}{% endblock %}
 
     <script>

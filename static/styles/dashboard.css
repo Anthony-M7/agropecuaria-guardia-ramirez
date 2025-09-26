@@ -54,22 +54,48 @@
     text-overflow: ellipsis;
 }
 
+/* Estilos base para todas las tarjetas */
+.hover-hero-card{
+    text-decoration: none;
+    transition: all ease-in 100ms;
+}
+.hover-hero-card:hover{
+    transform: scale(1.01);
+    opacity: 0.8;
+}
 
 
+.hero-card-lg,
+.hero-card-md,
+.hero-card-sm,
+.hero-card-sm2,
+.hero-card-full {
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    border: none;
+    border-radius: 10px; /* Borde redondeado */
+    overflow: hidden; /* Para que el contenido no se desborde del borde */
+}
 
-@media (min-width: 768px) {
-    .badge-nivel{
-        background-color: var(--marron-oscuro) !important;
-    }
-    .bg-brown{
-        background-color: var(--marron-oscuro) !important;
-    }
-    .bg-brown-btn-outline:checked+.btn{
-        background-color: var(--marron-oscuro) !important;
-        border-color: var(--marron-oscuro) !important;
-    }
-    .bg-brown-btn-outline+.btn{
-        border-color: var(--marron-oscuro);
-        color: var(--marron-oscuro);
-    }
+/* Estilos para las alturas y las imágenes de fondo */
+.hero-card-lg {
+    height: 250px;
+    background-image: url('../img/system/pesticides.jpg'); /* Reemplaza con tu imagen */
+}
+.hero-card-md {
+    height: 250px;
+    background-image: url('../img/system/veterinaria.jpg'); /* Reemplaza con tu imagen */
+}
+.hero-card-sm {
+    height: 250px;
+    background-image: url('../img/system/ferreteria.jpg'); /* Reemplaza con tu imagen */
+}
+.hero-card-sm2 {
+    height: 250px;
+    background-image: url('../img/system/construction.jpg'); /* Reemplaza con tu imagen */
+}
+.hero-card-full {
+    height: 250px;
+    background-image: url('../img/system/agropecuaria.jpg'); /* Reemplaza con tu imagen */
 }

@@ -164,7 +164,7 @@ body {
     .nav-system{
         position: sticky;
         top: 0px;
-        z-index: 999999999999;
+        z-index: 999999999;
     }
 
     #page-content-wrapper {
@@ -205,6 +205,102 @@ body {
     .notificaciones-btn:active {
         background-color: var(--dark-brown) !important;
         border-color: var(--dark-brown) !important;
+    }
+
+    .text-brown{
+        color: var(--dark-brown) !important;
+    }
+
+
+    /* Colores base para la tabla */
+    .table-brown {
+        --bs-table-bg: #EFEBE9; /* Un color base claro para la tabla */
+        --bs-table-striped-bg: #D7CCC8; /* Color de fondo para filas impares (striped) */
+        --bs-table-striped-color: #4E342E; /* Color del texto para filas impares */
+        --bs-table-active-bg: #BCAAA4; /* Color de fondo para filas activas (hover/click) */
+        --bs-table-hover-bg: #BCAAA4; /* Color de fondo al pasar el cursor (hover) */
+        --bs-table-hover-color: #4E342E; /* Color del texto al pasar el cursor */
+        color: #4E342E; /* Color del texto base */
+        border-color: #4E342E; /* Color del borde */
+    }
+
+    /* Estilos para el encabezado de la tabla */
+    .table-brown > :not(caption) > :not(:last-child) > * {
+        background-color: var(--bs-table-bg);
+        border-bottom-width: 1px;
+        border-color: #4E342E;
+    }
+
+    /* Estilos para el encabezado con el color oscuro */
+    .table-brown.table-dark-brown {
+        --bs-table-bg: #4E342E;
+        --bs-table-striped-bg: #3E2723;
+        --bs-table-striped-color: #F5F5F5;
+        --bs-table-active-bg: #5D4037;
+        --bs-table-active-color: #F5F5F5;
+        --bs-table-hover-bg: #5D4037;
+        --bs-table-hover-color: #F5F5F5;
+        color: #F5F5F5;
+        border-color: #F5F5F5;
+    }
+
+    /* Estilos para el encabezado */
+    .table-brown.table-light-brown > :not(caption) > :not(:last-child) > * {
+        background-color: var(--bs-table-bg);
+    }
+
+    /* Estilos para el hover */
+    .table-brown > tbody > tr:hover {
+        background-color: var(--bs-table-hover-bg);
+    }
+    .border-brown{
+        border-color: var(--dark-brown) !important;
+    }
+
+    /* Estilos para el botón sólido */
+.btn-brown {
+    --bs-btn-color: #fff; /* Color del texto del botón */
+    --bs-btn-bg: #4E342E; /* Color de fondo del botón */
+    --bs-btn-border-color: #4E342E; /* Color del borde del botón */
+    --bs-btn-hover-color: #fff; /* Color del texto al pasar el cursor */
+    --bs-btn-hover-bg: #5D4037; /* Color de fondo al pasar el cursor */
+    --bs-btn-hover-border-color: #5D4037; /* Color del borde al pasar el cursor */
+    --bs-btn-focus-shadow-rgb: 78, 52, 46; /* Sombra del foco */
+    --bs-btn-active-color: #fff; /* Color del texto al hacer clic */
+    --bs-btn-active-bg: #5D4037; /* Color de fondo al hacer clic */
+    --bs-btn-active-border-color: #5D4037; /* Color del borde al hacer clic */
+    --bs-btn-disabled-bg: #4E342E; /* Color de fondo del botón deshabilitado */
+    --bs-btn-disabled-border-color: #4E342E; /* Color del borde del botón deshabilitado */
+}
+
+/* Estilos para el botón de contorno (outline) */
+.btn-outline-brown {
+    --bs-btn-color: #4E342E; /* Color del texto del botón */
+    --bs-btn-border-color: #4E342E; /* Color del borde del botón */
+    --bs-btn-hover-color: #fff; /* Color del texto al pasar el cursor */
+    --bs-btn-hover-bg: #4E342E; /* Color de fondo al pasar el cursor */
+    --bs-btn-hover-border-color: #4E342E; /* Color del borde al pasar el cursor */
+    --bs-btn-active-color: #fff; /* Color del texto al hacer clic */
+    --bs-btn-active-bg: #4E342E; /* Color de fondo al hacer clic */
+    --bs-btn-active-border-color: #4E342E; /* Color del borde al hacer clic */
+    --bs-btn-disabled-color: #4E342E; /* Color del texto del botón deshabilitado */
+    --bs-btn-disabled-border-color: #4E342E; /* Color del borde del botón deshabilitado */
+}
+
+
+.badge-nivel{
+        background-color: var(--marron-oscuro) !important;
+    }
+    .bg-brown{
+        background-color: var(--marron-oscuro) !important;
+    }
+    .bg-brown-btn-outline:checked+.btn{
+        background-color: var(--marron-oscuro) !important;
+        border-color: var(--marron-oscuro) !important;
+    }
+    .bg-brown-btn-outline+.btn{
+        border-color: var(--marron-oscuro);
+        color: var(--marron-oscuro);
     }
 }
 /* #endregion */
