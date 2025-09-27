@@ -26,7 +26,9 @@ class Profile(models.Model):
     estado = models.CharField(choices=[("activo", "Activo"), ("inactivo", "Inactivo"), ("suspendido", "Suspendido")], blank=True)
     foto_perfil =  models.ImageField(
         upload_to='profiles_pictures/',
-        storage=fs
+        storage=fs,
+        null=True,
+        blank=True
     )
 
     def __str__(self):

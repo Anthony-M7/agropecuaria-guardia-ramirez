@@ -10,4 +10,5 @@ urlpatterns = [
     path('productos/<str:categoria>/', views.productosCategoria, name='productosCategoria'),
 
     path('configuracion/guardar/', views.guardar_configuracion, name='guardar_configuracion'),
+    path('producto/guardar/', views.registrar_producto, name='crearProducto'),
 ]

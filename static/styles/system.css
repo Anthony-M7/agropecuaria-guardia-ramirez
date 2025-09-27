@@ -289,18 +289,18 @@ body {
 
 
 .badge-nivel{
-        background-color: var(--marron-oscuro) !important;
-    }
-    .bg-brown{
-        background-color: var(--marron-oscuro) !important;
-    }
-    .bg-brown-btn-outline:checked+.btn{
-        background-color: var(--marron-oscuro) !important;
-        border-color: var(--marron-oscuro) !important;
-    }
-    .bg-brown-btn-outline+.btn{
-        border-color: var(--marron-oscuro);
-        color: var(--marron-oscuro);
-    }
+    background-color: var(--dark-brown) !important;
+}
+.bg-brown{
+    background-color: var(--dark-brown) !important;
+}
+.bg-brown-btn-outline:checked+.btn{
+    background-color: var(--dark-brown) !important;
+    border-color: var(--dark-brown) !important;
+}
+.bg-brown-btn-outline+.btn{
+    border-color: var(--dark-brown) !important;
+    color: var(--dark-brown) !important;
+}
 }
 /* #endregion */
