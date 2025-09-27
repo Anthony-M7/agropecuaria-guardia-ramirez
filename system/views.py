@@ -2,13 +2,16 @@
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
+from django.db.models import Sum, F, Count, Q
+from django.utils import timezone
+from datetime import timedelta
 from django.contrib import messages
 from django.db import transaction
 from .forms import ProductoForm, InformacionAdicionalFormSet
 from decimal import Decimal
 from .models import *
 
+@login_required
 def aplicar_conversion_precios(productos_list, configuracionStr):
     # --- 1. Inicializar el factor y la moneda de referencia ---
     moneda_referencia = configuracionStr[1] 
@@ -41,9 +44,62 @@ def aplicar_conversion_precios(productos_list, configuracionStr):
 def page_info(request):
     return render(request, 'dashboard/page_info.html')
 
+# @login_required
+# def get_date_range(periodo):
+#     # ... (tu implementación de get_date_range)
+#     # Ya la tienes definida, solo asegúrate de que esté en el ámbito correcto.
+#     now = timezone.now()
+#     if periodo == 'mensual':
+#         start_date = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+#         label = f"Mensual. Desde el {start_date.strftime('%d-%m-%Y')} hasta el {now.strftime('%d-%m-%Y')}"
+#     elif periodo == 'anual':
+#         start_date = now.replace(month=1, day=1, hour=0, minute=0, second=0, microsecond=0)
+#         label = f"Anual. Desde el {start_date.strftime('%d-%m-%Y')} hasta el {now.strftime('%d-%m-%Y')}"
+#     else: # Por defecto: Diario
+#         start_date = now.replace(hour=0, minute=0, second=0, microsecond=0)
+#         label = f"Diario. Desde el {start_date.strftime('%d-%m-%Y %H:%M')} hasta Ahora ({now.strftime('%d-%m-%Y %H:%M')})"
+        
+#     return start_date, now, label
+
+
 @login_required
 def dashboard(request):
-    return render(request, 'dashboard/dashboard.html')
+    # Obtener el período (usando GET si es desde el filtro de tiempo, POST si es recarga normal)
+    periodo_seleccionado = request.POST.get('periodo') or request.GET.get('periodo', 'diario')
+    # start_date, end_date, periodo_label = get_date_range(periodo_seleccionado)
+    
+    # ----------------------------------------------
+    # 1. Configuración Administrativa (Solo Lectura)
+    # ----------------------------------------------
+    try:
+        config = configuraciones_admin.objects.get(pk=1)
+    except configuraciones_admin.DoesNotExist:
+        config = None
+        
+    # ----------------------------------------------
+    # 2. Balance y Resumen General (De momento, ceros)
+    # ----------------------------------------------
+    ventas_totales = 0.00
+    compras_totales = 0.00
+    balance_neto = 0.00
+    
+    # ----------------------------------------------
+    # 5. Contexto para el Template
+    # ----------------------------------------------
+    context = {
+        'config': config,
+        'periodo_seleccionado': periodo_seleccionado,
+        # 'periodo_label': periodo_label,
+        'ventas_totales': ventas_totales,
+        'compras_totales': compras_totales,
+        'balance_neto': balance_neto,
+        
+        # Necesitamos variables para el buscador global (añadidas en el paso 3)
+        'search_query': '',
+        'search_results': [],
+    }
+
+    return render(request, 'dashboard/dashboard.html', context)
 
 @login_required
 def productos(request):
@@ -161,30 +217,61 @@ def registrar_producto(request):
     }
     return render(request, 'inventario/registrar_producto.html', context)
 
+@login_required
 def guardar_configuracion(request):
     if request.method == 'POST':
-        # 1. Obtener el único registro (asumiendo que siempre hay uno)
-        config_id = request.POST.get('config_id')
+        
+        # 1. Obtener el registro o crear uno
+        # Asume pk=1 como convención si config_id no está en el POST
+        config_id = request.POST.get('config_id', 1) 
         
         try:
+            # Intenta obtener por PK, si no existe, levanta DoesNotExist
             config = configuraciones_admin.objects.get(pk=config_id)
         except configuraciones_admin.DoesNotExist:
-            config = configuraciones_admin.objects.create() # Crea uno si no existe
+            # Si no existe, crea un nuevo registro
+            config = configuraciones_admin.objects.create(pk=1) 
 
         # 2. Actualizar los campos
         try:
-            config.tasa_cambio_cop = Decimal(request.POST['tasa_cambio_cop'])
-            config.tasa_cambio_bs = Decimal(request.POST['tasa_cambio_bs'])
-            config.mostrar_precios = request.POST['mostrar_precios']
+            # Obtener los valores del POST
+            tasa_cop_str = request.POST.get('tasa_cambio_cop', '').strip()
+            tasa_bs_str = request.POST.get('tasa_cambio_bs', '').strip()
+            
+            # NOTA: Tu vista original buscaba 'mostrar_precios', no 'mostrar_precios_en'
+            moneda_principal = request.POST.get('mostrar_precios_en') 
+            
+            # --- Conversión Robusta y Asignación ---
+            
+            # Tasa COP: Reemplaza coma por punto y solo convierte si hay valor
+            if tasa_cop_str:
+                # 💡 SOLUCIÓN CLAVE: Reemplazar la coma (,) por el punto (.)
+                # Esto previene el error 'ConversionSyntax'
+                config.tasa_cambio_cop = Decimal(tasa_cop_str.replace(',', '.'))
+            
+            # Tasa BS: Reemplaza coma por punto y solo convierte si hay valor
+            if tasa_bs_str:
+                # 💡 SOLUCIÓN CLAVE: Reemplazar la coma (,) por el punto (.)
+                config.tasa_cambio_bs = Decimal(tasa_bs_str.replace(',', '.'))
+                
+            # Moneda principal
+            if moneda_principal:
+                # Asume que el campo del modelo es 'mostrar_precios'
+                config.mostrar_precios = moneda_principal
             
             config.save()
             messages.success(request, "Configuración de precios actualizada con éxito.")
-            
-        except (ValueError, KeyError):
-            messages.error(request, "Error: Los valores de las tasas de cambio son inválidos.")
-            
-    # Redirige a la página anterior o a la lista de productos
-    referer_url = request.META.get('HTTP_REFERER', redirect('productos').url)
         
-    # 2. Redirige a la URL obtenida (recarga la página actual)
-    return redirect(referer_url)
+        # Capturamos el error de conversión (ValueError, ConversionSyntax)
+        except (ValueError, KeyError, TypeError, Exception):
+            # Usar 'Exception' al final es una buena práctica si la lógica es compleja
+            messages.error(request, "Error: Los valores de las tasas de cambio son inválidos. Asegúrese de que son números y use el punto o coma decimal de forma correcta.")
+            
+    # Redirige a la página anterior (usa un nombre de URL por defecto más seguro)
+    referer_url = request.META.get('HTTP_REFERER')
+    if referer_url:
+        return redirect(referer_url)
+    else:
+        # Fallback a una URL conocida si no hay HTTP_REFERER (ej. tu dashboard)
+        # Reemplaza 'nombre_del_dashboard' por la URL name real de tu dashboard
+        return redirect('nombre_del_dashboard')
