@@ -9,7 +9,7 @@ from .forms import ProductoForm, InformacionAdicionalFormSet
 from decimal import Decimal
 from .models import *
 
-def aplicar_conversion_precios(productos_list, configuracionStr):    
+def aplicar_conversion_precios(productos_list, configuracionStr):
     # --- 1. Inicializar el factor y la moneda de referencia ---
     moneda_referencia = configuracionStr[1] 
     factor_conversion = Decimal('1.0') # Por defecto, no hay conversión
@@ -36,7 +36,6 @@ def aplicar_conversion_precios(productos_list, configuracionStr):
         producto.precio_display = producto.precio_venta * factor_conversion 
         
     return productos_list
-
 
 @login_required
 def page_info(request):
